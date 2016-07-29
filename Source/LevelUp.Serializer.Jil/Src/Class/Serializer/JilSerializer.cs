@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Text;
 
 namespace LevelUp.Serializer.Jil
 {
@@ -37,7 +38,7 @@ namespace LevelUp.Serializer.Jil
 
             var data = JSON.Serialize(obj);
 
-            using (var sw = new StreamWriter(stream))
+            using (var sw = new StreamWriter(stream, Encoding.UTF8, 1024, true))
             {
                 sw.Write(data);
             }
@@ -63,7 +64,7 @@ namespace LevelUp.Serializer.Jil
             if (enableDecompress)
                 throw new NotImplementedException();
 
-            using (var sr = new StreamReader(stream))
+            using (var sr = new StreamReader(stream, Encoding.UTF8, false, 1024, true))
             {
                 return JSON.Deserialize<T>(sr.ReadToEnd());
             }
